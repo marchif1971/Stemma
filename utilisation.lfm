@@ -1,0 +1,60 @@
+object FormUtilisation: TFormUtilisation
+  Left = 456
+  Height = 365
+  Top = 302
+  Width = 437
+  BorderIcons = []
+  Caption = 'Utilisation'
+  ClientHeight = 365
+  ClientWidth = 437
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '0.9.31'
+  object Button1: TButton
+    Left = 352
+    Height = 25
+    Top = 328
+    Width = 75
+    Cancel = True
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object TableauUtilisation: TStringGrid
+    Left = 8
+    Height = 312
+    Top = 8
+    Width = 419
+    Columns = <    
+      item
+        Title.Caption = 'Événement'
+        Width = 75
+      end    
+      item
+        Title.Caption = 'Témoin'
+        Width = 183
+      end    
+      item
+        Title.Caption = '#'
+      end    
+      item
+        Title.Caption = 'Date'
+        Width = 75
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    RowCount = 100
+    TabOrder = 1
+    OnDblClick = TableauUtilisationDblClick
+    ColWidths = (
+      1
+      75
+      183
+      64
+      75
+    )
+  end
+end

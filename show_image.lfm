@@ -1,0 +1,64 @@
+object ShowImage: TShowImage
+  Left = 754
+  Height = 262
+  Top = 412
+  Width = 328
+  BorderIcons = [biSystemMenu]
+  Caption = 'ShowImage'
+  ClientHeight = 242
+  ClientWidth = 328
+  Menu = MainMenu1
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.8.2.0'
+  object Image: TImage
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Proportional = True
+    Stretch = True
+  end
+  object Memo: TMemo
+    Left = 8
+    Height = 186
+    Top = 8
+    Width = 312
+    Lines.Strings = (
+      'Memo'
+    )
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 160
+    Height = 25
+    Top = 208
+    Width = 75
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 240
+    Height = 25
+    Top = 208
+    Width = 75
+    Cancel = True
+    Caption = 'Annul.'
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object MainMenu1: TMainMenu
+    left = 57
+    top = 192
+    object MenuItem1: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 27
+      ShortCutKey2 = 121
+      OnClick = MenuItem1Click
+    end
+  end
+end

@@ -1,0 +1,133 @@
+object FormExplorateur2: TFormExplorateur2
+  Left = 357
+  Height = 402
+  Top = 175
+  Width = 324
+  BorderIcons = [biSystemMenu]
+  Caption = 'Explorateur'
+  ClientHeight = 402
+  ClientWidth = 324
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  ShowInTaskBar = stNever
+  LCLVersion = '1.8.2.0'
+  object IndexGrid: TStringGrid
+    Left = 8
+    Height = 200
+    Top = 8
+    Width = 304
+    ColCount = 7
+    Columns = <    
+      item
+        Title.Caption = 'Id'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Nom'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Naiss.'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Décès'
+        Width = 64
+      end    
+      item
+        Title.Caption = '*'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Ordre'
+        Visible = False
+      end>
+    DragMode = dmAutomatic
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu1
+    TabOrder = 2
+    OnDblClick = IndexGridDblClick
+    OnDrawCell = IndexGridDrawCell
+    OnMouseDown = IndexGridMouseDown
+    ColWidths = (
+      1
+      64
+      64
+      64
+      64
+      0
+      0
+    )
+  end
+  object Recherche: TEdit
+    Left = 8
+    Height = 23
+    Top = 215
+    Width = 304
+    Color = 16768734
+    OnDblClick = RechercheDblClick
+    OnKeyPress = RechercheKeyPress
+    TabOrder = 0
+  end
+  object O: TEdit
+    Left = 80
+    Height = 23
+    Top = 200
+    Width = 80
+    TabOrder = 3
+    Text = '2'
+    Visible = False
+  end
+  object RechercheF: TEdit
+    Left = 8
+    Height = 23
+    Top = 243
+    Width = 304
+    Color = 14606079
+    OnDblClick = RechercheDblClick
+    OnKeyPress = RechercheKeyPress
+    TabOrder = 1
+  end
+  object PopupMenu1: TPopupMenu
+    left = 288
+    top = 200
+    object MenuItem3: TMenuItem
+      Caption = 'Tri par &prénom'
+      OnClick = MenuItem3Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Tri par &nom'
+      OnClick = MenuItem4Click
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Tri par nai&ssance'
+      OnClick = MenuItem5Click
+    end
+    object MenuItem6: TMenuItem
+      Caption = 'Tri par &décès'
+      OnClick = MenuItem6Click
+    end
+  end
+  object Query1: TZQuery
+    Connection = Principale.Database
+    SortType = stIgnored
+    AutoCalcFields = False
+    Params = <>
+    Options = []
+    left = 248
+    top = 200
+  end
+  object Query2: TZQuery
+    Connection = Principale.Database
+    SortType = stIgnored
+    AutoCalcFields = False
+    ParamCheck = False
+    Params = <>
+    Options = []
+    left = 208
+    top = 200
+  end
+end

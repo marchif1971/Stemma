@@ -1,0 +1,26 @@
+object FormToDoList: TFormToDoList
+  Left = 443
+  Height = 224
+  Top = 214
+  Width = 312
+  BorderIcons = []
+  Caption = 'FormToDoList'
+  ClientHeight = 224
+  ClientWidth = 312
+  OnClose = FormClose
+  OnDeactivate = FormDeactivate
+  OnShow = FormShow
+  LCLVersion = '1.8.2.0'
+  object Memo1: TMemo
+    Left = 0
+    Height = 224
+    Top = 0
+    Width = 312
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Lines.Strings = (
+      'Memo1'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+end

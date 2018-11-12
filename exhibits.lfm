@@ -1,0 +1,75 @@
+object FormExhibits: TFormExhibits
+  Left = 672
+  Height = 83
+  Top = 98
+  Width = 374
+  BorderIcons = []
+  Caption = 'Documents'
+  ClientHeight = 83
+  ClientWidth = 374
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '0.9.31'
+  object TableauExhibits: TStringGrid
+    Left = 0
+    Height = 200
+    Top = 0
+    Width = 304
+    Columns = <    
+      item
+        Title.Caption = '*'
+      end    
+      item
+        Title.Caption = 'Titre'
+      end    
+      item
+        Title.Caption = 'Type'
+      end    
+      item
+        Title.Caption = 'Format'
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenuEnfant
+    TabOrder = 0
+    OnDblClick = TableauExhibitsDblClick
+    OnDrawCell = TableauExhibitsDrawCell
+    OnSelection = TableauExhibitsSelection
+    ColWidths = (
+      1
+      64
+      64
+      64
+      64
+    )
+  end
+  object PopupMenuEnfant: TPopupMenu
+    left = 346
+    top = 55
+    object MenuItem1: TMenuItem
+      Caption = '&Primaire'
+      ShortCut = 8248
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+      OnClick = MenuItem3Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Modifier'
+      ShortCut = 116
+      OnClick = TableauExhibitsDblClick
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Supprimer'
+      ShortCut = 117
+      OnClick = MenuItem5Click
+    end
+  end
+end

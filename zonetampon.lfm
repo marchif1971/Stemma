@@ -1,0 +1,106 @@
+object FormTampon: TFormTampon
+  Left = 471
+  Height = 240
+  Top = 236
+  Width = 320
+  BorderIcons = [biSystemMenu]
+  Caption = 'Zone Tampon'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  ShowInTaskBar = stNever
+  LCLVersion = '1.8.2.0'
+  object Tampon: TStringGrid
+    Left = 8
+    Height = 200
+    Top = 8
+    Width = 304
+    ColCount = 7
+    Columns = <    
+      item
+        Title.Caption = 'Id'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Nom'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Naiss.'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Décès'
+        Width = 64
+      end    
+      item
+        Title.Caption = '*'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Ordre'
+        Visible = False
+      end>
+    DragMode = dmAutomatic
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu1
+    RowCount = 1
+    TabOrder = 0
+    OnDragDrop = TamponDragDrop
+    OnDragOver = TamponDragOver
+    OnDblClick = TamponDblClick
+    OnDrawCell = TamponDrawCell
+    OnMouseDown = TamponMouseDown
+    ColWidths = (
+      1
+      64
+      64
+      64
+      64
+      0
+      0
+    )
+  end
+  object PopupMenu1: TPopupMenu
+    left = 176
+    top = 176
+    object MenuItem1: TMenuItem
+      Caption = 'Supprimer'
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Supprimer tout'
+      OnClick = MenuItem2Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Load from file'
+      OnClick = MenuItem3Click
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Save to file'
+      Enabled = False
+      OnClick = MenuItem5Click
+    end
+    object MenuItem6: TMenuItem
+      Caption = 'Save to file...'
+      OnClick = MenuItem6Click
+    end
+  end
+  object OpenDialog: TOpenDialog
+    Filter = '.data'
+    Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
+    left = 96
+    top = 192
+  end
+  object SaveDialog: TSaveDialog
+    left = 40
+    top = 168
+  end
+end
