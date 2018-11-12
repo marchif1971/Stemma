@@ -9,7 +9,7 @@ Logiciel de généalogie sous Lazarus / MySQL
     - Infinité de sources liés à un événement, nom ou relation
     - Infinité d'exhibits (images ou texte) liés à une personne ou événement.
  - Cible la présentation sous forme textuelle des informations enregistrées
- - Conçu pour pouvoir être multilangue (seul le français est configuré)
+ - Conçu pour pouvoir être multilangue (seul le français est totalement configuré, anglais partiel)
 
 Genealogy software programmed with Lazarus / MySQL 
  - allows great flexibility in data management
@@ -21,4 +21,4 @@ Genealogy software programmed with Lazarus / MySQL
     - Infinity ofsources forn an event, name or relation
     - Infinity of exhibits (images or text) for a person or event.
  - Concetrates on a textual presentation of the information
- - Designed to be multiple language (only french is configured)
+ - Designed to be multiple language (only french is totally configured, english partially)
