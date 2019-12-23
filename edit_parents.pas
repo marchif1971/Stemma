@@ -188,11 +188,17 @@ begin
      EditParents.ActiveControl:=EditParents.A;
      Principale.Query1.SQL.Clear;
      if code='P' then
+        begin
+        EditParents.ActiveControl:=EditParents.A;
         Principale.Query1.SQL.Add('SELECT R.no, R.Y, R.B, R.M, R.X, R.SD, R.P, N.N, R.A FROM R JOIN N on R.B=N.I WHERE N.X=1 AND R.no='+
                                    FormParents.TableauParents.Cells[0,FormParents.TableauParents.Row])
+     end
      else
+       begin
+       EditParents.ActiveControl:=EditParents.B;
        Principale.Query1.SQL.Add('SELECT R.no, R.Y, R.B, R.M, R.X, R.SD, R.P, N.N, R.A FROM R JOIN N on R.B=N.I WHERE N.X=1 AND R.no='+
                                   FormEnfants.TableauEnfants.Cells[0,FormEnfants.TableauEnfants.Row]);
+     end;
      Principale.Query1.Open;
      Principale.Query1.First;
      type_cherche:=Principale.Query1.Fields[1].AsString;
@@ -250,7 +256,7 @@ begin
   ModalResult:=mrOk;
 end;
 
-procedure TEditParents.MenuItem6Click(Sender: TObject);
+procedure TEditParents.MenuItem6Click(Sender: TObject); // repeat
 var
   j:integer;
   found:boolean;

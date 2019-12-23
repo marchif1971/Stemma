@@ -1,7 +1,7 @@
 object FormNoms: TFormNoms
-  Left = 484
+  Left = 1363
   Height = 134
-  Top = 224
+  Top = 806
   Width = 473
   BorderIcons = []
   Caption = 'Noms et attributs'

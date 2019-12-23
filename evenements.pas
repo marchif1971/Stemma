@@ -14,21 +14,65 @@ type
 
   TFormEvenements = class(TForm)
     MenuItem1: TMenuItem;
+    MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
+    MenuItem14: TMenuItem;
+    MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    MenuItem17: TMenuItem;
+    MenuItem18: TMenuItem;
+    MenuItem19: TMenuItem;
     MenuItem2: TMenuItem;
+    MenuItem20: TMenuItem;
+    MenuItem21: TMenuItem;
+    MenuItem22: TMenuItem;
+    MenuItem23: TMenuItem;
+    MenuItem24: TMenuItem;
+    MenuItem25: TMenuItem;
+    MenuItem26: TMenuItem;
+    MenuItem27: TMenuItem;
+    MenuItem28: TMenuItem;
+    MenuItem29: TMenuItem;
     MenuItem3: TMenuItem;
+    MenuItem30: TMenuItem;
+    MenuItem31: TMenuItem;
+    MenuItem32: TMenuItem;
+    MenuItem33: TMenuItem;
+    MenuItem34: TMenuItem;
+    MenuItem35: TMenuItem;
+    MenuItem36: TMenuItem;
+    MenuItem37: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
+    MenuItem8: TMenuItem;
+    MenuItem9: TMenuItem;
     PopupMenuEvenements: TPopupMenu;
     TableauEvenements: TStringGrid;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MenuItem10Click(Sender: TObject);
+    procedure MenuItem11Click(Sender: TObject);
+    procedure MenuItem12Click(Sender: TObject);
+    procedure MenuItem18Click(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
+    procedure MenuItem24Click(Sender: TObject);
+    procedure MenuItem25Click(Sender: TObject);
+    procedure MenuItem26Click(Sender: TObject);
+    procedure MenuItem27Click(Sender: TObject);
+    procedure MenuItem28Click(Sender: TObject);
+    procedure MenuItem31Click(Sender: TObject);
+    procedure MenuItem32Click(Sender: TObject);
+    procedure MenuItem32Click(Sender: TObject; ACanvas: TCanvas; ARect: TRect;
+      AState: TOwnerDrawState);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem7Click(Sender: TObject);
+    procedure MenuItem8Click(Sender: TObject);
     procedure TableauEvenementsDblClick(Sender: TObject);
     procedure TableauEvenementsDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure TableauEvenementsDragOver(Sender, Source: TObject; X, Y: Integer;
@@ -160,6 +204,99 @@ begin
   if TableauEvenements.Row>0 then
      If StrToInt(TableauEvenements.Cells[7,TableauEvenements.Row])>0 then
         Principale.Individu.Caption:=TableauEvenements.Cells[7,TableauEvenements.Row];
+end;
+
+procedure TFormEvenements.MenuItem24Click(Sender: TObject);
+begin
+  PutCode('A','RP');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem25Click(Sender: TObject);
+begin
+  PutCode('A','RA');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem26Click(Sender: TObject);
+begin
+  PutCode('A','RB');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem27Click(Sender: TObject);
+begin
+  PutCode('A','RM');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem28Click(Sender: TObject);
+begin
+  PutCode('A','RR');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem31Click(Sender: TObject);
+begin
+  PutCode('A','OJ');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem32Click(Sender: TObject);
+var
+  temp : string;
+begin
+  temp:='OJ'+TMenuItem(Sender).caption;
+  PutCode('A',temp);
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem32Click(Sender: TObject; ACanvas: TCanvas;
+  ARect: TRect; AState: TOwnerDrawState);
+begin
+
 end;
 
 procedure TFormEvenements.MenuItem3Click(Sender: TObject);
@@ -386,6 +523,11 @@ begin
    end;
 end;
 
+procedure TFormEvenements.MenuItem8Click(Sender: TObject);
+begin
+
+end;
+
 procedure TFormEvenements.TableauEvenementsDblClick(Sender: TObject);
 begin
   If TableauEvenements.Row>0 then
@@ -402,27 +544,47 @@ procedure TFormEvenements.TableauEvenementsDragDrop(Sender, Source: TObject; X,
   Y: Integer);
 var
   DestCol,DestRow:integer;
-  temp:string;
+  temp, witness:string;
 begin
   // Fin de drag, identifier l'événement, ajouter le "draggé" comme témoin
   TableauEvenements.MouseToCell(X, Y, DestCol, DestRow);
 //  Principale.Query1.Open;
 //  Principale.Query1.First;
   // Ajoute le témoin qui a été ajouté par défaut dans le tableau
-  Principale.Query1.SQL.Clear;
-  temp:='INSERT INTO W (R, I, P, E, X) VALUES (''TEMOIN'', '+Principale.DragValue.Caption+', '''', '+TableauEvenements.Cells[0,DestRow]+', 0)';
-  // doit vérifier si cet événement accepte les "TÉMOIN"
-//  if (Application.MessageBox(pchar(AnsitoUTF8(temp)),pchar(temp),MB_YESNO)=IDYES) then
-//     begin
-  Principale.Query1.SQL.Add(temp);
-  Principale.Query1.ExecSQL;
-//   end;
+  if length(Principale.DragList.Caption)>0 then
+     while length(Principale.DragList.Caption)>0 do
+     begin
+       temp:=Principale.DragList.Caption;
+       if (AnsiPos(',',Principale.DragList.Caption)>0) then
+          witness:=copy(Principale.DragList.Caption,1,AnsiPos(',',Principale.DragList.Caption)-1)
+       else
+           witness:=Principale.DragList.Caption;
+       Principale.DragList.Caption:=Copy(Principale.DragList.Caption,AnsiPos(',',Principale.DragList.Caption)+1,length(Principale.DragList.Caption));
+       Principale.Query1.SQL.Clear;
+       temp:='INSERT INTO W (R, I, P, E, X) VALUES (''TEMOIN'', '+witness+', '''', '+TableauEvenements.Cells[0,DestRow]+', 0)';
+       // doit vérifier si cet événement accepte les "TÉMOIN"
+       //  if (Application.MessageBox(pchar(AnsitoUTF8(temp)),pchar(temp),MB_YESNO)=IDYES) then
+       //     begin
+       Principale.Query1.SQL.Add(temp);
+       Principale.Query1.ExecSQL;
+     end
+  else
+     begin
+     witness:=Principale.DragValue.Caption;
+     Principale.Query1.SQL.Clear;
+     temp:='INSERT INTO W (R, I, P, E, X) VALUES (''TEMOIN'', '+witness+', '''', '+TableauEvenements.Cells[0,DestRow]+', 0)';
+     // doit vérifier si cet événement accepte les "TÉMOIN"
+     //  if (Application.MessageBox(pchar(AnsitoUTF8(temp)),pchar(temp),MB_YESNO)=IDYES) then
+     //     begin
+     Principale.Query1.SQL.Add(temp);
+     Principale.Query1.ExecSQL;
+  end;
 end;
 
 procedure TFormEvenements.TableauEvenementsDragOver(Sender, Source: TObject; X,
   Y: Integer; State: TDragState; var Accept: Boolean);
 begin
-  accept := (StrToInt(Principale.DragValue.Caption)>0);
+  accept := (StrToInt(Principale.DragValue.Caption)>0) OR (length(Principale.DragList.Caption)>0);
 end;
 
 procedure TFormEvenements.TableauEvenementsDrawCell(Sender: TObject; aCol,
@@ -465,13 +627,97 @@ begin
   TableauEvenements.Cells[4,0]:=AnsitoUTF8(Principale.Traduction.Items[155]);
   TableauEvenements.Cells[5,0]:=AnsitoUTF8(Principale.Traduction.Items[177]);
   MenuItem1.Caption:=AnsitoUTF8(Principale.Traduction.Items[222]);
-  MenuItem3.Caption:=AnsitoUTF8(Principale.Traduction.Items[224]);
+  MenuItem3.Caption:=AnsitoUTF8(Principale.Traduction.Items[426]);
+  MenuItem30.Caption:=AnsitoUTF8(Principale.Traduction.Items[224]);
   MenuItem4.Caption:=AnsitoUTF8(Principale.Traduction.Items[225]);
   MenuItem5.Caption:=AnsitoUTF8(Principale.Traduction.Items[226]);
   MenuItem7.Caption:=AnsitoUTF8(Principale.Traduction.Items[234]);
+  MenuItem8.Caption:=AnsitoUTF8(Principale.Traduction.Items[416]);
+  MenuItem9.Caption:=AnsitoUTF8(Principale.Traduction.Items[417]);
+  MenuItem10.Caption:=AnsitoUTF8(Principale.Traduction.Items[418]);
+  MenuItem11.Caption:=AnsitoUTF8(Principale.Traduction.Items[419]);
+  MenuItem24.Caption:=AnsitoUTF8(Principale.Traduction.Items[420]);
+  MenuItem25.Caption:=AnsitoUTF8(Principale.Traduction.Items[421]);
+  MenuItem26.Caption:=AnsitoUTF8(Principale.Traduction.Items[422]);
+  MenuItem27.Caption:=AnsitoUTF8(Principale.Traduction.Items[423]);
+  MenuItem28.Caption:=AnsitoUTF8(Principale.Traduction.Items[424]);
+  MenuItem29.Caption:=AnsitoUTF8(Principale.Traduction.Items[425]);
+  MenuItem31.Caption:=AnsitoUTF8(Principale.Traduction.Items[427]);
+  MenuItem12.Caption:=AnsitoUTF8(Principale.Traduction.Items[428]);
+  MenuItem13.Caption:=AnsitoUTF8(Principale.Traduction.Items[429]);
+  MenuItem14.Caption:=AnsitoUTF8(Principale.Traduction.Items[430]);
+  MenuItem15.Caption:=AnsitoUTF8(Principale.Traduction.Items[431]);
+  MenuItem16.Caption:=AnsitoUTF8(Principale.Traduction.Items[432]);
+  MenuItem17.Caption:=AnsitoUTF8(Principale.Traduction.Items[433]);
+  MenuItem18.Caption:=AnsitoUTF8(Principale.Traduction.Items[428]);
+  MenuItem19.Caption:=AnsitoUTF8(Principale.Traduction.Items[429]);
+  MenuItem20.Caption:=AnsitoUTF8(Principale.Traduction.Items[430]);
+  MenuItem21.Caption:=AnsitoUTF8(Principale.Traduction.Items[431]);
+  MenuItem22.Caption:=AnsitoUTF8(Principale.Traduction.Items[432]);
+  MenuItem23.Caption:=AnsitoUTF8(Principale.Traduction.Items[433]);
+  MenuItem32.Caption:=AnsitoUTF8(Principale.Traduction.Items[428]);
+  MenuItem33.Caption:=AnsitoUTF8(Principale.Traduction.Items[429]);
+  MenuItem34.Caption:=AnsitoUTF8(Principale.Traduction.Items[430]);
+  MenuItem35.Caption:=AnsitoUTF8(Principale.Traduction.Items[431]);
+  MenuItem36.Caption:=AnsitoUTF8(Principale.Traduction.Items[432]);
+  MenuItem37.Caption:=AnsitoUTF8(Principale.Traduction.Items[433]);
   GetFormPosition(Sender as TForm,0,0,70,1000);
   GetGridPosition(FormEvenements.TableauEvenements as TStringGrid,7);
   PopulateEvenements;
+end;
+
+procedure TFormEvenements.MenuItem10Click(Sender: TObject);
+begin
+  PutCode('A','OE');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem11Click(Sender: TObject);
+begin
+  PutCode('A','OC');
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem12Click(Sender: TObject);
+var
+  temp : string;
+begin
+  temp:='OE'+TMenuItem(Sender).caption;
+  PutCode('A',temp);
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
+end;
+
+procedure TFormEvenements.MenuItem18Click(Sender: TObject);
+var
+  temp : string;
+begin
+  temp:='OC'+TMenuItem(Sender).caption;
+  PutCode('A',temp);
+  if EditEvenement.Showmodal = mrOK then
+     begin
+     PopulateEvenements;
+     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
+     if Principale.MenuItem11.Checked then
+        PopulateExhibits(FormExhibits.TableauExhibits,'I',Principale.Individu.Caption);
+  end;
 end;
 
 {$R *.lfm}

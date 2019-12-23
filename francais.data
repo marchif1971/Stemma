@@ -1,4 +1,4 @@
-Êtes-vous certain de vouloir quitter STEMMA?
+﻿Êtes-vous certain de vouloir quitter STEMMA?
 Confirmation
 Il a été impossible de se connecter à la base de données MySQL en utilisant les paramètres fournis.
 Nom de la base de données
@@ -414,3 +414,63 @@ Ouvrir...
 Sauvegarder
 Sauvegarder sous...
 Populer la table de &couples
+Occupation
+Religion
+Écolier
+Cultivateur
+Presbytérienne
+Anglicane
+Baptiste
+Méthodiste
+Protestante
+Divers
+Ajouter divers
+Journalier
+1851
+1861
+1871
+1881
+1891
+1901
+Ajouter un acte de baptême
+Entrez la ligne complète (38 colonnes) du fichier GoogleCalc:
+Ajouter un acte de mariage
+Entrez la ligne complète (73 colonnes) du fichier GoogleCalc:
+Ajouter un acte de sépulture
+Entrez la ligne complète (54 colonnes) du fichier GoogleCalc:
+Interpréter
+Registre
+Année
+Feuillet
+Acte
+# célébrant
+# baptisé
+Date de naissance
+# père
+Métier
+Présent
+signature
+# mère
+Résidence
+# parrain
+# marraine
+Commentaires
+Futur
+Décédé
+Mineur
+Décédée
+Future
+Mineure
+# 1er témoin
+Relation
+# 2e témoin
+Majeur
+Majeure
+Décédé
+# conjoint(e)
+Âge
+fils de
+veuf de
+fille de
+veuve de
+ligne #475

@@ -14,7 +14,9 @@ procedure GetFormPosition(Sender: TForm;a:integer;b:integer;c:integer;d:integer)
 procedure SaveModificationTime(no:string);
 procedure PopulateCitations(Tableau:TStringGrid;Code:string;No:string);
 function DecodeName(Name:string;format:byte):string;
+function CodeName(Titre:string;Prenom:string;Nom:string;suffixe:string):string;
 function DecodeLieu(Lieu:string):string;
+function EstimatePlace(lieu:string;registre:string):string;
 function ConvertDate(Date:string;format:byte):string;
 function RemoveUTF8(text:string):string;
 function DecodePhrase(sujet:string;role:string;phrase:string;TypeEvenement:string;evenement:string):string;
@@ -38,8 +40,8 @@ uses
 procedure Ecrit_Interet(no:string;maxint:integer;generation:integer);
 var
    Form: TForm;
-   suivant1,suivant2, temp:string;
-   row, I:integer;
+   suivant1,suivant2 :string;
+   row:integer;
 begin
    // Écrit le maxint dans la personne en question
    Principale.Query1.SQL.Clear;
@@ -120,7 +122,6 @@ end;
 procedure SosaStradonitz(no:string;sosa:int64;typerapport:integer;generation:integer);
 var
    suivant1,suivant2,naissance,deces:string;
-   row:integer;
 begin
    // Vérifie si la personne déjà dans T1
    Principale.Query1.SQL.Clear;
@@ -274,7 +275,7 @@ begin
          Date:=Copy(Date,2,length(Date));
          style:='0';
       end;
-      if (Copy(Date,1,1)='c') or (Copy(Date,1,1)='v') then
+      if (lowercase(Copy(Date,1,1))='c') or (lowercase(Copy(Date,1,1))='v') then
          begin
          Date:=Copy(Date,2,length(Date));
          style:='1';
@@ -298,7 +299,11 @@ begin
       Valid:=true;
       len:=AnsiPos(' ou',Date)-1;
       if len<=0 then
+        len:=AnsiPos(' OU',Date)-1;
+      if len<=0 then
         len:=AnsiPos('ou',Date)-1;
+      if len<=0 then
+        len:=AnsiPos('OU',Date)-1;
       if len<=0 then
         len:=AnsiPos(' -',Date)-1;
       if len<=0 then
@@ -306,11 +311,19 @@ begin
       if len<=0 then
         len:=AnsiPos(' a',Date)-1;
       if len<=0 then
+        len:=AnsiPos(' A',Date)-1;
+      if len<=0 then
         len:=AnsiPos(' à',Date)-1;
+      if len<=0 then
+        len:=AnsiPos(' À',Date)-1;
       if len<=0 then
         len:=AnsiPos('a',Date)-1;
       if len<=0 then
+        len:=AnsiPos('A',Date)-1;
+      if len<=0 then
         len:=AnsiPos('à',Date)-1;
+      if len<=0 then
+        len:=AnsiPos('À',Date)-1;
       if len<=0 then
          len:=length(Date);
       tmpSep1 := 0;
@@ -380,17 +393,17 @@ begin
             style:='5';
          end;
          temp:=RemoveUTF8(Date);
-         if (temp[1]='a') or (temp[1]='à') then
+         if (lowercase(temp[1])='a') or (lowercase(temp[1])='à') then
          begin
             Date:=Copy(temp,2,length(Date));
             style:='7';
          end;
-         if (Copy(Date,1,2)='au') then
+         if (lowercase(Copy(Date,1,2))='au') then
             begin
             Date:=Copy(Date,3,length(Date));
             style:='7';
          end;
-         if (Copy(Date,1,2)='ou') then
+         if (lowercase(Copy(Date,1,2))='ou') then
             begin
             Date:=Copy(Date,3,length(Date));
             style:='6';
@@ -1338,6 +1351,7 @@ var
   RoleRecherche, Remplace, temp, Sexe:string;
   PosEnd1, PosSep1, PosSep2, PosSep3, compte:integer;
 begin
+   compte:=0;
    if AnsiPos('<L='+Principale.Traduction.Items[319]+'>',uppercase(phrase))>0 then
       begin
       phrase:=copy(phrase,AnsiPos('<L='+Principale.Traduction.Items[319]+'>',uppercase(phrase))+5,length(phrase));
@@ -2330,6 +2344,32 @@ begin
      Ini.Free;
 end;
 
+function EstimatePlace(lieu:string;registre:string):string;
+var
+   temp:string;
+begin
+   temp:='';
+   if length(lieu)>0 then
+      temp:='1';
+   if (lowercase(lieu)='broughton') then
+        temp:='29846';
+   if (lowercase(lieu)='québec') then
+        temp:='22894';
+   if (lowercase(lieu)='st-elzéar') or (lowercase(lieu)='saint-elzéar') then
+        temp:='33724';
+   if (lowercase(lieu)='ste-marie') or (lowercase(lieu)='sainte-marie') then
+        temp:='31031';
+   if (lowercase(lieu)='st-gilles') or (lowercase(lieu)='saint-gilles') then
+        temp:='27986';
+   if (lowercase(lieu)='st-giles') or (lowercase(lieu)='saint-giles') then
+        temp:='27986';
+   if (lowercase(lieu)='st-sylvestre') or (lowercase(lieu)='saint-sylvestre') then
+        temp:='32334';
+   if (lowercase(lieu)='cette paroisse') then
+        temp:=registre;
+   EstimatePlace:=temp;
+end;
+
 procedure GetGridPosition(Sender: TStringGrid;cols:integer);
 var
    ini:TIniFile;
@@ -2339,6 +2379,22 @@ begin
      For i:= 0 to cols-1 do
         Sender.Columns[i].Width :=ini.ReadInteger(Sender.Name,inttostr(i),15);
      Ini.Free;
+end;
+
+function CodeName(Titre:string;Prenom:string;Nom:string;suffixe:string):string;
+var
+   temp:string;
+begin
+   temp:='';
+   if length(Titre)>0 then
+      temp:=temp+'<Titre>'+Titre+'</Titre>';
+   if length(Prenom)>0 then
+      temp:=temp+'<Prénom>'+Prenom+'</Prénom>';
+   if length(Nom)>0 then
+      temp:=temp+'<Nom>'+Nom+'</Nom>';
+   if length(Suffixe)>0 then
+      temp:=temp+'<Suffixe>'+Suffixe+'</Suffixe>';
+   CodeName:=AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(temp,'\','\\'),'"','\"'),'''','\''');
 end;
 
 function DecodeName(Name:string;format:byte):string;
@@ -2424,6 +2480,14 @@ begin
             nomcomplet := nomcomplet + ' (' + titre + ')';
    end;
    If length(nomcomplet) = 0 then nomcomplet := '???';
+   if format = 3 then // Titre
+      nomcomplet:=titre;
+   if format = 4 then // Prénom
+      nomcomplet:=prenom;
+   if format = 5 then // Nom
+      nomcomplet:=nom;
+   if format = 6 then // Suffixe
+      nomcomplet:=suffixe;
    DecodeName := nomcomplet;
 end;
 

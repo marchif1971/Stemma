@@ -11,7 +11,7 @@ uses
   Explorateur, Parents, Historique, Enfants, Fratrie, Evenements, Exhibits,
   Ancetres, Descendants, Image, Lieux, Sources, Depots, unitTypes, LCLType,
   Grids, a_propos, Edit_Nom, SelectPersonne, Edit_Evenements, ToDoList,
-  ZoneTampon, Explorateur2{%H-};
+  ZoneTampon, Explorateur2, AjouteBapteme, AjouteMariage, AjouterSepulture{%H-};
 
 type
 
@@ -21,6 +21,7 @@ type
     DataHist: TStringGrid;
     DragValue: TEdit;
     DragName: TEdit;
+    DragList: TEdit;
     MenuItem54: TMenuItem;
     MenuItem55: TMenuItem;
     MenuItem56: TMenuItem;
@@ -47,6 +48,10 @@ type
     MenuItem76: TMenuItem;
     MenuItem77: TMenuItem;
     MenuItem78: TMenuItem;
+    MenuItem79: TMenuItem;
+    MenuItem80: TMenuItem;
+    MenuItem81: TMenuItem;
+    MenuItem82: TMenuItem;
     Traduction: TListBox;
     MenuItem27: TMenuItem;
     MenuItem28: TMenuItem;
@@ -183,6 +188,9 @@ type
     procedure MenuItem76Click(Sender: TObject);
     procedure MenuItem77Click(Sender: TObject);
     procedure MenuItem78Click(Sender: TObject);
+    procedure MenuItem79Click(Sender: TObject);
+    procedure MenuItem81Click(Sender: TObject);
+    procedure MenuItem82Click(Sender: TObject);
     procedure MenuItem9Click(Sender: TObject);
     procedure OldClick(Sender: TObject);
     procedure Supprimer_projetClick(Sender: TObject);
@@ -308,17 +316,24 @@ end;
 
 
 
+
+
 procedure TPrincipale.ConnexionClick(Sender: TObject);
 begin
   If ConnexionDb.Showmodal = mrOK then
   begin
+    Principale.Database.LibraryLocation:='C:\Stemma\libmysql.dll';
     Principale.Database.HostName := ConnexionDb.HostName.Caption;
     Principale.Database.User := ConnexionDb.USager.Caption;
     Principale.Database.Password := ConnexionDb.Password.Caption;
     try
       Principale.Database.Connected:=true;
     except
-      Showmessage(AnsitoUTF8(Traduction.Items[2]));
+      on e:Exception do
+      begin
+            Showmessage(AnsitoUTF8(Traduction.Items[2]));
+            Showmessage(e.Message);
+      end;
     end;
     if Principale.Database.Connected then
     begin
@@ -524,6 +539,9 @@ begin
   MenuItem76.Caption:=AnsitoUTF8(Principale.Traduction.Items[406]);
   MenuItem77.Caption:=AnsitoUTF8(Principale.Traduction.Items[407]);
   MenuItem78.Caption:=AnsitoUTF8(Principale.Traduction.Items[415]);
+  MenuItem79.Caption:=AnsitoUTF8(Principale.Traduction.Items[434]);
+  MenuItem81.Caption:=AnsitoUTF8(Principale.Traduction.Items[436]);
+  MenuItem82.Caption:=AnsitoUTF8(Principale.Traduction.Items[438]);
   GetFormPosition(Sender as TForm,0,0,70,1000);
   ProgressBar:= TProgressBar.Create(StatusBar);
   with ProgressBar do
@@ -1955,7 +1973,7 @@ begin
         Query4.ExecSQL;
         Query3.Next;
      end;
-     // Ajoute le nom dans l'explorateur...
+     { Ajoute le nom dans l'explorateur...
      if MenuItem13.Checked then
         begin
         if FormExplorateur.O.text='1' then
@@ -2001,7 +2019,7 @@ begin
         FormExplorateur.Index.Cells[5,j]:='';
         FormExplorateur.Index.Cells[6,j]:=temp;
         FormExplorateur.Index.Row:=j;
-     end;
+     end; }
      Query1.Next;
   end;
   // Copie tous les documents
@@ -4235,7 +4253,7 @@ begin
   Query1.Open;
   ProgressBar.Position:=0;
   Query2.SQL.Clear;
-  Query2.SQL.add('SELECT count(a.no) as row FROM a WHERE NOT EXISTS (SELECT d.no FROM d WHERE a.D=d.no))');
+  Query2.SQL.add('SELECT count(a.no) as row FROM a WHERE NOT EXISTS (SELECT d.no FROM d WHERE a.D=d.no)');
   Query2.Open;
   Query2.First;
   row:=Query2.Fields[0].AsInteger+1;
@@ -4261,7 +4279,7 @@ begin
   Query1.Open;
   ProgressBar.Position:=0;
   Query2.SQL.Clear;
-  Query2.SQL.add('SELECT count(C.no) as row FROM C WHERE NOT (C.Y=''E'' OR C.Y=''R'' OR C.Y=''N''))');
+  Query2.SQL.add('SELECT count(C.no) as row FROM C WHERE NOT (C.Y=''E'' OR C.Y=''R'' OR C.Y=''N'')');
   Query2.Open;
   Query2.First;
   row:=Query2.Fields[0].AsInteger+1;
@@ -4287,7 +4305,7 @@ begin
   Query1.Open;
   ProgressBar.Position:=0;
   Query2.SQL.Clear;
-  Query2.SQL.add('SELECT count(C.no) as row FROM C WHERE NOT EXISTS (SELECT S.no FROM S WHERE C.S = S.no))');
+  Query2.SQL.add('SELECT count(C.no) as row FROM C WHERE NOT EXISTS (SELECT S.no FROM S WHERE C.S = S.no)');
   Query2.Open;
   Query2.First;
   row:=Query2.Fields[0].AsInteger+1;
@@ -4391,7 +4409,7 @@ begin
   Query1.Open;
   ProgressBar.Position:=0;
   Query2.SQL.Clear;
-  Query2.SQL.add('SELECT count(C.no) as row FROM D WHERE NOT (D.I=0 OR EXISTS (SELECT I.no FROM I WHERE D.I = I.no)');
+  Query2.SQL.add('SELECT count(D.no) as row FROM D WHERE NOT (D.I=0 OR EXISTS (SELECT I.no FROM I WHERE D.I = I.no))');
   Query2.Open;
   Query2.First;
   row:=Query2.Fields[0].AsInteger+1;
@@ -4828,6 +4846,8 @@ begin
         if (Pos1+Pos2)>9 then
            i2:=RemoveUTF8(Copy(Query1.Fields[2].AsString,Pos1,Pos2-Pos1));
      end;
+     i1:=copy(i1,1,50);
+     i2:=copy(i2,1,50);
      Principale.Query4.SQL.Clear;
      Principale.Query4.SQL.Add('UPDATE N SET I1='''+
                                (AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(i1,'\','\\'),'"','\"'),'''','\'''))+
@@ -4884,6 +4904,7 @@ begin
   ProgressBar.Visible:=False;
   Screen.Cursor := MyCursor;
 end;
+
 
 procedure TPrincipale.MenuItem71Click(Sender: TObject);
 var
@@ -5162,6 +5183,21 @@ begin
   Screen.Cursor := MyCursor;
 end;
 
+procedure TPrincipale.MenuItem79Click(Sender: TObject); // ajouter un acte de baptême
+begin
+  AjouteBapt.Show;
+end;
+
+procedure TPrincipale.MenuItem81Click(Sender: TObject);   // ajouter un acte de mariage
+begin
+   AjouteMar.Show;
+end;
+
+procedure TPrincipale.MenuItem82Click(Sender: TObject);  // ajouter un acte de sépulture
+begin
+  AjouterSep.Show;
+end;
+
 procedure TPrincipale.MenuItem9Click(Sender: TObject);
 begin
   If not (Sender as TMenuItem).Checked then
@@ -5286,7 +5322,11 @@ begin
         If Ini.ReadInteger('Fenetre','Descendants',0)=1 then MenuItem23Click(Principale.MenuItem23);
         If Ini.ReadInteger('Fenetre','Image',0)=1 then MenuItem26Click(Principale.MenuItem26);
      except
-        Showmessage(AnsitoUTF8(Traduction.Items[26]));
+        on e:Exception do
+        begin
+             Showmessage(AnsitoUTF8(Traduction.Items[26]));
+             Showmessage(e.Message);
+        end;
      end;
   end;
 end;

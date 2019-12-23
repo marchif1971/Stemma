@@ -274,6 +274,7 @@ begin
         Principale.Query1.SQL.Add('SELECT R.no, R.B, R.A, N.no FROM R JOIN N on R.B=N.I WHERE N.X=1 AND R.no='+TableauParents.Cells[0,StartRow]);
         Principale.Query1.Open;
         Principale.Query1.First;
+        Principale.DragList.Caption:='';
         Principale.DragValue.Caption:=Principale.Query1.Fields[1].AsString;
         Principale.DragName.Caption:=Principale.Query1.Fields[3].AsString;
      end;

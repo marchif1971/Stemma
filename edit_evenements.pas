@@ -237,7 +237,7 @@ end;
 
 procedure TEditEvenement.FormShow(Sender: TObject);
 var
-  j,pos1,pos2:integer;
+  j,pos1,pos2,sexe:integer;
   Lieu,phrase,code,nocode,type_cherche:string;
   call_ychange:boolean;
 begin
@@ -285,19 +285,28 @@ begin
   MenuItem8.Caption:=AnsitoUTF8(Principale.Traduction.Items[226]);
   MenuItem10.Caption:=AnsitoUTF8(Principale.Traduction.Items[181]);
   MenuItem14.Caption:=AnsitoUTF8(Principale.Traduction.Items[234]);
+  Principale.Query2.SQL.Clear;
+  Principale.Query2.SQL.add('SELECT S, V, I, date, no FROM I WHERE no='+Principale.Individu.Caption);
+  Principale.Query2.Open;
+  If Principale.Query2.Fields[0].AsString='F' then
+     sexe:=1
+  else
+     sexe:=0;
   // Populate le ComboBox
   Principale.Query2.SQL.Clear;
   GetCode(code,nocode);
-  if code='A' then
+  if code='A' then // si Ajout d'évènement
      begin
-     if nocode='0' then
+     if nocode='0' then // divers
         Principale.Query2.SQL.Add('SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=''B'' OR Y.Y=''D'' OR Y.Y=''M'' OR Y.Y=''X'' OR Y.Y=''Z'' ORDER BY Y.T');
-     if (nocode='B') or (nocode='N') then
+     if (nocode='B') or (nocode='N') then // Naissance ou baptême
         Principale.Query2.SQL.Add('SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=''B'' ORDER BY Y.T');
-     if (nocode='D') or (nocode='S') then
+     if (nocode='D') or (nocode='S') then // Décès ou sépulture
         Principale.Query2.SQL.Add('SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=''D'' ORDER BY Y.T');
+     if (copy(nocode,1,1)='O') or (copy(nocode,1,1)='R') then // Occupation(511) ou religion(560)
+        Principale.Query2.SQL.Add('SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=''X'' ORDER BY Y.T');
   end
-  else
+  else // si édition d'évènement
      begin
      Principale.Query1.SQL.Clear;
      Principale.Query1.SQL.Add('SELECT Y.Y FROM E JOIN Y ON Y.no=E.Y WHERE E.no='+
@@ -327,6 +336,26 @@ begin
         begin
         Y.ItemIndex:=0;
         Y2.ItemIndex:=0;
+        X.Text:='0';
+     end;
+     if copy(nocode,1,1)='O' then // Occupation (511)
+        begin
+        // Mettre le bon Y.ItemIndex
+        // Trouver si ce doit être un primaire ou non
+        for j:=0 to Y2.Items.Count-1 do
+           if Y2.Items[j]='511' then
+              Y.ItemIndex:=j;
+        Y2.ItemIndex:=Y.ItemIndex;
+        X.Text:='0';
+     end;
+     if copy(nocode,1,1)='R' then // Occupation (560)
+        begin
+        // Mettre le bon Y.ItemIndex
+        // Trouver si ce doit être un primaire ou non
+        for j:=0 to Y2.Items.Count-1 do
+           if Y2.Items[j]='560' then
+              Y.ItemIndex:=j;
+        Y2.ItemIndex:=Y.ItemIndex;
         X.Text:='0';
      end;
      if nocode='N' then
@@ -410,11 +439,43 @@ begin
      TableauTemoins.Cells[4,1]:=GetName(Principale.Individu.Text);
      TableauTemoins.Cells[1,1]:='*';
      M.Text:='';
-     P2.Text:='';
      PD.Text:='';
-     PD2.Text:=InterpreteDate('',1);
-     SD.Text:='';
-     SD2.Text:=PD2.Text;
+     if copy(nocode,1,1)='O' then // Occupation (511)
+        begin
+        if copy(nocode,2,1)='E' then // Écolier
+           if sexe=0 then
+              M.Text:='écolier'
+           else
+              M.Text:='écolière';
+        if copy(nocode,2,1)='C' then // Cultivateur
+           if sexe=0 then
+              M.Text:='cultivateur'
+           else
+              M.Text:='cultivatrice';
+        if copy(nocode,2,1)='J' then // Journalier
+           if sexe=0 then
+              M.Text:='journalier'
+           else
+              M.Text:='journalière';
+        PD.Text:=copy(nocode,3,4);
+     end;
+     if copy(nocode,1,1)='R' then // Religion (560)
+        begin
+        if copy(nocode,2,1)='P' then // Presbytérienne
+           M.Text:='presbytérienne';
+        if copy(nocode,2,1)='A' then // Anglicane
+           M.Text:='anglicane';
+        if copy(nocode,2,1)='B' then // Baptiste
+           M.Text:='baptiste';
+        if copy(nocode,2,1)='M' then // Métohdiste
+           M.Text:='méthodiste';
+        if copy(nocode,2,1)='R' then //
+           M.Text:='protestante';
+     end;
+     SD.Text:=PD.Text;
+     PD2.Text:=PD.Text;
+     SD2.Text:=PD.Text;
+     P2.Text:='';
      No.Text:='0';
      Role.Text:=TableauTemoins.Cells[1,1];
      LA.Text:='';
@@ -542,7 +603,16 @@ begin
      SD.Text:=ConvertDate(Principale.Query1.Fields[6].AsString,1);
      // Aller chercher P, Role et témoins de W
      phrase:=PopulateTemoins(no.Text);
-     if call_ychange then YChange(sender);
+     if call_ychange then // On a changer d'un vieux type à nouveau type
+        begin
+        YChange(sender);
+        // ajout d'un "à" si il y a un lieu
+        If ((LA.Text = '') and ((length(L0.Text)>0) or (length(L1.Text)>0) or
+            (length(L2.Text)>0) or (length(L3.Text)>0) or (length(L4.Text)>0))) then
+           begin
+           LA.Text := 'à';
+        end;
+     end;
   end;
   Principale.Query2.SQL.Clear;
   Principale.Query2.SQL.Add('SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no='+Y2.Items[Y2.ItemIndex]);
@@ -1164,22 +1234,27 @@ begin
 end;
 
 procedure TEditEvenement.MenuItem14Click(Sender: TObject);
+var
+    i:integer;
 begin
-  // Toggle le statut primaire d'un témoin
-    if TableauTemoins.Cells[1,TableauTemoins.Row]='*' then
-       TableauTemoins.Cells[1,TableauTemoins.Row]:=''
-    else
-       TableauTemoins.Cells[1,TableauTemoins.Row]:='*';
-    if StrToInt(TableauTemoins.Cells[0,TableauTemoins.Row])>0 then
-       begin
-       Principale.Query1.SQL.Clear;
-       if TableauTemoins.Cells[1,TableauTemoins.Row]='*' then
-          Principale.Query1.SQL.Add('UPDATE W SET X=1 WHERE W.no='+TableauTemoins.Cells[0,TableauTemoins.Row])
+  for i:=TableauTemoins.Selection.Top to TableauTemoins.Selection.Bottom do
+  begin
+       // Toggle le statut primaire d'un témoin
+       if TableauTemoins.Cells[1,i]='*' then
+          TableauTemoins.Cells[1,i]:=''
        else
-          Principale.Query1.SQL.Add('UPDATE W SET X=0 WHERE W.no='+TableauTemoins.Cells[0,TableauTemoins.Row]);
-       Principale.Query1.ExecSQL;
-       SaveModificationTime(TableauTemoins.Cells[3,TableauTemoins.Row]);
-    end;
+          TableauTemoins.Cells[1,i]:='*';
+       if StrToInt(TableauTemoins.Cells[0,i])>0 then
+          begin
+          Principale.Query1.SQL.Clear;
+          if TableauTemoins.Cells[1,i]='*' then
+             Principale.Query1.SQL.Add('UPDATE W SET X=1 WHERE W.no='+TableauTemoins.Cells[0,i])
+          else
+             Principale.Query1.SQL.Add('UPDATE W SET X=0 WHERE W.no='+TableauTemoins.Cells[0,i]);
+          Principale.Query1.ExecSQL;
+          SaveModificationTime(TableauTemoins.Cells[3,i]);
+       end;
+  end;
 end;
 
 procedure TEditEvenement.Modifier2Click(Sender: TObject);
@@ -2074,7 +2149,7 @@ end;
 
 procedure TEditEvenement.SupprimerTemoinClick(Sender: TObject);
 begin
-  If (TableauTemoins.RowCount>1) and (TableauTemoins.Row>0) then  // Il faudra qu'il reste au moins un témoin
+  If (TableauTemoins.RowCount>2) and (TableauTemoins.Row>0) then  // Il faudra qu'il reste au moins un témoin
      if Application.MessageBox(Pchar(AnsitoUTF8(Principale.Traduction.Items[32])+
         TableauTemoins.Cells[4,TableauTemoins.Row]+' ('+
         TableauTemoins.Cells[3,TableauTemoins.Row]+')'+AnsitoUTF8(Principale.Traduction.Items[28])),pchar(AnsitoUTF8(Principale.Traduction.Items[1])),MB_YESNO)=IDYES then

@@ -323,6 +323,7 @@ begin
      if StartRow>0 then
         begin
         TableauNoms.Row:=StartRow;
+        Principale.DragList.Caption:='';
         Principale.DragName.Caption:=TableauNoms.Cells[0,StartRow];
      end;
   end;

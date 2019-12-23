@@ -16,6 +16,7 @@ type
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    MenuItem2: TMenuItem;
     Z: TMemo;
     Label3: TLabel;
     Description: TMemo;
@@ -34,9 +35,13 @@ type
     N: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure DescriptionEditingDone(Sender: TObject);
     procedure FichierDblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
+    procedure MenuItem2Click(Sender: TObject);
+    procedure TitreEditingDone(Sender: TObject);
   private
     { private declarations }
   public
@@ -57,7 +62,9 @@ procedure TEditExhibits.FormShow(Sender: TObject);
 var
   code,nocode:string;
 begin
+  Principale.DataHist.Row:=0;
   EditExhibits.ActiveControl:=EditExhibits.Titre;
+  GetFormPosition(Sender as TForm,0,0,208,497);
   Caption:=AnsitoUTF8(Principale.Traduction.Items[178]);
   Label2.Caption:=AnsitoUTF8(Principale.Traduction.Items[179]);
   Label3.Caption:=AnsitoUTF8(Principale.Traduction.Items[162]);
@@ -102,12 +109,87 @@ begin
   ModalResult:=mrOk;
 end;
 
+procedure TEditExhibits.MenuItem2Click(Sender: TObject);  // Repeat
+var
+  j:integer;
+  found:boolean;
+begin
+  if EditExhibits.ActiveControl.Name='Titre' then
+     begin
+     found:=false;
+     For j:=Principale.DataHist.Row to Principale.DataHist.RowCount-1 do
+        begin
+        if Principale.DataHist.Cells[0,j]='Titre' then
+           begin
+           Titre.text:=Principale.DataHist.Cells[1,j];
+           TitreEditingDone(Sender);
+           found:=true;
+           break;
+        end;
+     end;
+     if not found then
+        begin
+        For j:=0 to Principale.DataHist.RowCount-1 do
+           begin
+           if Principale.DataHist.Cells[0,j]='Titre' then
+              begin
+              Titre.text:=Principale.DataHist.Cells[1,j];
+              TitreEditingDone(Sender);
+              found:=true;
+              break;
+           end;
+        end;
+     end;
+  end;
+  if EditExhibits.ActiveControl.Name='Description' then
+     begin
+     found:=false;
+     For j:=Principale.DataHist.Row to Principale.DataHist.RowCount-1 do
+        begin
+        if Principale.DataHist.Cells[0,j]='Description' then
+           begin
+           Description.text:=Principale.DataHist.Cells[1,j];
+           DescriptionEditingDone(Sender);
+           found:=true;
+           break;
+        end;
+     end;
+     if not found then
+        begin
+        For j:=0 to Principale.DataHist.RowCount-1 do
+           begin
+           if Principale.DataHist.Cells[0,j]='Description' then
+              begin
+              Description.text:=Principale.DataHist.Cells[1,j];
+              DescriptionEditingDone(Sender);
+              found:=true;
+              break;
+           end;
+        end;
+     end;
+  end;
+  if found then Principale.DataHist.Row:=j+1;
+end;
+
+procedure TEditExhibits.TitreEditingDone(Sender: TObject);
+begin
+  Principale.DataHist.InsertColRow(false,0);
+  Principale.DataHist.Cells[0,0]:='Titre';
+  Principale.DataHist.Cells[1,0]:=Titre.Text;
+end;
+
 procedure TEditExhibits.FichierDblClick(Sender: TObject);
 begin
   OpenDialog.FileName:=Fichier.Text;
   OpenDialog.InitialDir:=ExtractFilePath(Fichier.Text);
   if OpenDialog.Execute then
      Fichier.Text:=OpenDialog.FileName;
+end;
+
+procedure TEditExhibits.FormClose(Sender: TObject; var CloseAction: TCloseAction
+  );
+begin
+  SaveFormPosition(Sender as TForm);
 end;
 
 procedure TEditExhibits.Button3Click(Sender: TObject);
@@ -186,6 +268,13 @@ begin
            ShowImage.Showmodal;
         end;
      end;
+end;
+
+procedure TEditExhibits.DescriptionEditingDone(Sender: TObject);
+begin
+  Principale.DataHist.InsertColRow(false,0);
+  Principale.DataHist.Cells[0,0]:='Description';
+  Principale.DataHist.Cells[1,0]:=Description.Text;
 end;
 
 procedure TEditExhibits.Button1Click(Sender: TObject);

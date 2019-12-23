@@ -1,7 +1,7 @@
 object EditEvenement: TEditEvenement
-  Left = 686
+  Left = 1205
   Height = 698
-  Top = 30
+  Top = 88
   Width = 630
   BorderIcons = []
   BorderStyle = bsDialog

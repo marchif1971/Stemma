@@ -29,14 +29,13 @@ type
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
+    procedure TamponAfterSelection(Sender: TObject; aCol, aRow: Integer);
     procedure TamponDblClick(Sender: TObject);
     procedure TamponDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure TamponDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
     procedure TamponDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect;
       aState: TGridDrawState);
-    procedure TamponMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
     procedure MenuItem1Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
   private
@@ -182,6 +181,27 @@ begin
   end;
 end;
 
+procedure TFormTampon.TamponAfterSelection(Sender: TObject; aCol, aRow: Integer
+  );
+var
+  i : integer;
+begin
+   principale.DragValue.Caption:='0';
+   principale.DragList.Caption:='';
+   if (Tampon.Selection.Top = Tampon.Selection.Bottom) then
+      begin
+      if Tampon.Row>0 then
+         begin
+         Principale.DragValue.Caption:=Tampon.Cells[1,Tampon.Row];
+         Principale.DragName.Caption:=Tampon.Cells[0,Tampon.Row];
+      end;
+   end
+   else
+      for i:=Tampon.Selection.Top to Tampon.Selection.Bottom do
+          if i>0 then
+             Principale.DragList.Caption:=Principale.DragList.Caption+Tampon.Cells[1,i]+',';
+end;
+
 procedure TFormTampon.TamponDblClick(Sender: TObject);
 begin
   If Tampon.Row>0 then
@@ -259,22 +279,6 @@ begin
      (Sender as TStringGrid).Canvas.Font.Color := clMaroon;
      (Sender as TStringGrid).Canvas.TextOut(aRect.Left+2,aRect.Top+2,(Sender as TStringGrid).Cells[aCol,aRow]);
   end;
-end;
-
-procedure TFormTampon.TamponMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-var
-  startCol, startRow    : LongInt;
-begin
-   if Button=mbLeft then
-      begin
-      Tampon.MouseToCell(x,y,startCol,StartRow);
-      if StartRow>0 then
-         begin
-         Tampon.Row:=StartRow;
-         Principale.DragValue.Caption:=Tampon.Cells[1,StartRow];
-      end;
-   end;
 end;
 
 procedure TFormTampon.MenuItem1Click(Sender: TObject);

@@ -39,6 +39,8 @@ type
     procedure RechercheChange(Sender: TObject);
     procedure RechercheDblClick(Sender: TObject);
     procedure RechercheKeyPress(Sender: TObject; var Key: char);
+    procedure RechercheMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { private declarations }
   public
@@ -378,7 +380,7 @@ if (Key=chr(13)) then
        searchtextF2:=searchtextF2+'''%'+copy(rechercheF.text,last,i-last+1)+'%''';
        searchtextF3:=searchtextF3+'''%'+copy(rechercheF.text,last,i-last+1)+'%''';
        Query1.SQL.Clear;
-       Query1.SQL.add('SELECT N.no, N.I, N, I1, I2, I3, I4, X, I.I,1 FROM N JOIN I on N.I=I.no WHERE ');
+       Query1.SQL.add('SELECT N.no, N.I, N, I1, I2, I3, I4, X, I.I, R FROM N JOIN I on N.I=I.no WHERE ');
        Query1.SQL.add('R');
 //       Query1.SQL.add('REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(N,''<Titre>'','' ''),''</Titre>'','' ''),''<Prénom>'','' ''),''</Prénom>'','' ''),''<Nom>'','' ''),''</Nom>'','' ''),''<Suffixe>'','' ''),''</Suffixe>'','' '')');
        Query1.SQL.add(' LIKE '+searchtextF+' AND (I.S=''F'' OR I.S=''?'')');
@@ -403,7 +405,7 @@ if (Key=chr(13)) then
        searchtext2:=searchtext2+'''%'+copy(recherche.text,last,i-last+1)+'%''';
        searchtext3:=searchtext3+'''%'+copy(recherche.text,last,i-last+1)+'%''';
        Query1.SQL.Clear;
-       Query1.SQL.add('SELECT N.no, N.I, N, I1, I2, I3, I4, X, I.I,1 FROM N JOIN I on N.I=I.no WHERE ');
+       Query1.SQL.add('SELECT N.no, N.I, N, I1, I2, I3, I4, X, I.I, R FROM N JOIN I on N.I=I.no WHERE ');
 //       Query1.SQL.add('REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(N,''<Titre>'','' ''),''</Titre>'','' ''),''<Prénom>'','' ''),''</Prénom>'','' ''),''<Nom>'','' ''),''</Nom>'','' ''),''<Suffixe>'','' ''),''</Suffixe>'','' '')');
        Query1.SQL.add('R');
        Query1.SQL.add(' LIKE '+searchtext+' AND (I.S=''M'' OR I.S=''?'')');
@@ -562,6 +564,12 @@ if (Key=chr(13)) then
     Screen.Cursor := MyCursor;
     TrouveIndividu;
 end;
+end;
+
+procedure TFormExplorateur.RechercheMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+
 end;
 
 

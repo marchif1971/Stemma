@@ -1,7 +1,7 @@
 object Principale: TPrincipale
-  Left = 337
+  Left = 1102
   Height = 225
-  Top = 145
+  Top = 746
   Width = 747
   Caption = 'Stemma'
   ClientHeight = 205
@@ -568,6 +568,15 @@ object Principale: TPrincipale
     Text = '0'
     Visible = False
   end
+  object DragList: TEdit
+    Left = 336
+    Height = 23
+    Top = 104
+    Width = 80
+    TabOrder = 8
+    Text = '0'
+    Visible = False
+  end
   object MainMenu: TMainMenu
     left = 16
     top = 16
@@ -749,6 +758,21 @@ object Principale: TPrincipale
         Caption = 'Sép&ulture'
         ShortCut = 16469
         OnClick = MenuItem43Click
+      end
+      object MenuItem80: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem79: TMenuItem
+        Caption = 'Ajouter un acte de baptême'
+        OnClick = MenuItem79Click
+      end
+      object MenuItem81: TMenuItem
+        Caption = 'Ajouter un acte de mariage'
+        OnClick = MenuItem81Click
+      end
+      object MenuItem82: TMenuItem
+        Caption = 'Ajouter un acte de sépulture'
+        OnClick = MenuItem82Click
       end
     end
     object MenuItem17: TMenuItem
@@ -956,7 +980,7 @@ object Principale: TPrincipale
     HostName = 'localhost'
     Port = 3306
     Protocol = 'mysql-5'
-    LibraryLocation = 'C:\lazarus\Stemma\libmysql.dll'
+    LibraryLocation = 'C:\Stemma\libmysql.dll'
     left = 64
     top = 72
   end

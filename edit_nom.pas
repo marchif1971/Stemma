@@ -96,7 +96,7 @@ var
 implementation
 
 uses
-  noms, unit1, explorateur, evenements;
+  noms, unit1, evenements; // explorateur
 
 {$R *.lfm}
 
@@ -415,7 +415,7 @@ begin
      Y2.ItemIndex:=0;
      Label6.Visible:=true;
   end
-  else
+  else // modifie un nom existant en provenance du tableau nom
      begin
      Principale.Query1.SQL.Clear;
      Principale.Query1.SQL.Add('SELECT N.no, N.I, N.Y, N.N, N.M, N.P, N.PD, N.SD, N.X FROM  N WHERE N.no='+
@@ -1073,7 +1073,7 @@ begin
      end;
      GetCode(code,nocode);
   end;
-  if (Code='J') then
+  if (Code='J') then // ajoute conjoint ou conjointe
      begin
      Principale.Query1.SQL.Clear;
      Principale.Query1.SQL.Add('SELECT S, Q, M FROM C WHERE Y=''N'' AND N='+no.text);
@@ -1090,7 +1090,7 @@ begin
         Principale.Query1.Next;
      end;
   end;
-  if (Code='P') or (Code='M') then
+  if (Code='P') or (Code='M') then  // ajoute père ou mère
      begin
      Principale.Query1.SQL.Clear;
      Principale.Query1.SQL.Add('SELECT S, Q, M FROM C WHERE Y=''N'' AND N='+no.text);
@@ -1107,7 +1107,7 @@ begin
         Principale.Query1.Next;
      end;
   end;
-  if (Code='F') or (Code='S') then
+  if (Code='F') or (Code='S') then   // ajoute frère ou soeur
      begin
      Principale.Query1.SQL.Clear;
      Principale.Query1.SQL.Add('SELECT S, Q, M FROM C WHERE Y=''N'' AND N='+no.text);
@@ -1126,7 +1126,7 @@ begin
            GetCode(code,nocode);
         end;
   end;
-  if (Code='I') or (Code='L') then
+  if (Code='I') or (Code='L') then  // ajoute fils ou fille
      begin
      Principale.Query1.SQL.Clear;
      Principale.Query1.SQL.Add('SELECT S, Q, M FROM C WHERE Y=''N'' AND N='+no.text);
@@ -1302,9 +1302,10 @@ var
     found:boolean;
     temp,nom,titre,prenom,suffixe:string;
 begin
+  j:=0;
+  found:=false;
   if EditNom.ActiveControl.Name='TableauNoms' then
      begin
-     found:=false;
      For j:=Principale.DataHist.Row to Principale.DataHist.RowCount-1 do
         begin
         if Principale.DataHist.Cells[0,j]='N' then

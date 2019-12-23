@@ -1,7 +1,7 @@
 object EditExhibits: TEditExhibits
-  Left = 323
+  Left = 1253
   Height = 208
-  Top = 216
+  Top = 256
   Width = 497
   BorderIcons = []
   BorderStyle = bsDialog
@@ -9,6 +9,7 @@ object EditExhibits: TEditExhibits
   ClientHeight = 188
   ClientWidth = 497
   Menu = MainMenu1
+  OnClose = FormClose
   OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '1.8.2.0'
@@ -54,7 +55,7 @@ object EditExhibits: TEditExhibits
   object Primaire: TCheckBox
     Left = 16
     Height = 19
-    Top = 8
+    Top = 152
     Width = 64
     Caption = 'Primaire'
     TabOrder = 3
@@ -74,6 +75,7 @@ object EditExhibits: TEditExhibits
     Height = 23
     Top = 8
     Width = 424
+    OnEditingDone = TitreEditingDone
     TabOrder = 0
     Text = 'Titre'
   end
@@ -93,6 +95,7 @@ object EditExhibits: TEditExhibits
     Lines.Strings = (
       'Description'
     )
+    OnEditingDone = DescriptionEditingDone
     TabOrder = 1
   end
   object Label4: TLabel
@@ -172,6 +175,11 @@ object EditExhibits: TEditExhibits
   object MainMenu1: TMainMenu
     left = 195
     top = 168
+    object MenuItem2: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = MenuItem2Click
+    end
     object MenuItem1: TMenuItem
       Caption = '&Quit'
       ShortCut = 121

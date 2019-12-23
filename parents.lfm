@@ -1,7 +1,7 @@
 object FormParents: TFormParents
-  Left = 426
+  Left = 1368
   Height = 167
-  Top = 316
+  Top = 746
   Width = 416
   BorderIcons = []
   Caption = 'Parents'

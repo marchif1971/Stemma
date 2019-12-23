@@ -1,7 +1,7 @@
 object EditNom: TEditNom
-  Left = 637
+  Left = 448
   Height = 590
-  Top = 108
+  Top = 204
   Width = 629
   BorderIcons = []
   BorderStyle = bsDialog

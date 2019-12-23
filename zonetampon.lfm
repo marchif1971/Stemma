@@ -1,7 +1,7 @@
 object FormTampon: TFormTampon
-  Left = 471
+  Left = 1510
   Height = 240
-  Top = 236
+  Top = 385
   Width = 320
   BorderIcons = [biSystemMenu]
   Caption = 'Zone Tampon'
@@ -50,11 +50,11 @@ object FormTampon: TFormTampon
     PopupMenu = PopupMenu1
     RowCount = 1
     TabOrder = 0
+    OnAfterSelection = TamponAfterSelection
     OnDragDrop = TamponDragDrop
     OnDragOver = TamponDragOver
     OnDblClick = TamponDblClick
     OnDrawCell = TamponDrawCell
-    OnMouseDown = TamponMouseDown
     ColWidths = (
       1
       64

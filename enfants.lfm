@@ -1,7 +1,7 @@
 object FormEnfants: TFormEnfants
-  Left = 220
+  Left = 1298
   Height = 167
-  Top = 364
+  Top = 652
   Width = 416
   BorderIcons = []
   Caption = 'Enfants'
